@@ -33,20 +33,43 @@ def game():
     if ('*'not in Md.wordBlurList): 
         print(f'''Ви виграли
 Слово було {Md.wordStr}''')
-        # score(points)
+        return
         
     elif(Md.fails == 3):
         print(outputfails[Md.fails])
-        # score(points)
+        return
         
     print(f'''
-
-                                               
-# Ваше слово {Md.wordBlurStr}                    
-# Угадуйте літеру                                
+Ваше слово {Md.wordBlurStr}                    
+Угадуйте літеру                                
                                                   
-# {" ".join(outputfails[Md.fails])}                        
-# ''')
+{outputfails[Md.fails]}''')
+    print(' '.join(Md.alphabet[0:11]))
+    print(' '.join(Md.alphabet[11:22]))
+    print(' '.join(Md.alphabet[22:33]))
+
+    answer = input()
+# Перевірка літери у слові
+    if(answer.upper() in Md.alphabet):
+        index = Md.alphabet.index(answer.upper())
+        Md.alphabet[index] = "-"
+        if(answer.lower() in Md.wordList):
+            print(f"Літера {answer} є в цьому слові.")
+            for idx1 in range(len(Md.wordList)):
+                if(answer.lower() == Md.wordBlurList[idx1]):
+                    # Заміна * на літеру
+                    Md.wordBlurList[idx1] = answer.lower()
+            game()
+        else:
+            print("Нажаль такої літери там немає")
+            Md.fails += 1 
+            return
+        
+    else: 
+        print('Ви вже вводили цю літеру або вона не з Української мови.')
+        game()
+
+
 
 
 def main():
@@ -58,7 +81,8 @@ def main():
         Md.wordList = list(Md.wordStr)
         Md.wordBlurStr = len(Md.wordStr) * '*'
         Md.wordBlurList = list(Md.wordBlurStr)
-        game()
+        score = game()
+        
     elif userChoice == 2:
         printHighScore()
     else:
