@@ -1,4 +1,4 @@
-﻿# view
+# view
 
 def printMenu():
         choice = int(input(''' 
@@ -25,5 +25,31 @@ def printDifficulty():
     return diffLevel
 
 def printHighScore():
-    print('high score')
+    print('''
++----------------------------------------+
+              Score Point                
+           1. Word    -50           
++----------------------------------------+ ''')
     return
+
+firstFail = '''
+
+
+
+
+TTTTTTTTTT'''
+secondFail = '''
+|----T
+|        
+|    
+|     
+TTTTTTTTTT'''
+thirdFail = f'''
+|----T
+|    0    
+|  / | \  
+|   / \   
+TTTTTTTTTT
+
+Ви програли
+Слово було "{Md.wordStr}"'''
