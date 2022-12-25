@@ -1,6 +1,7 @@
 ## Hangman v2.0
 
 from View import *
+import Model as Md
 
 def getWord(difficulty):
 
@@ -28,7 +29,6 @@ def getWord(difficulty):
     return word
 
 def game():
-    import Model as Md
     outputfails = {0:' ', 1: firstFail,2: secondFail,3: thirdFail}
     if ('*'not in Md.wordBlurList): 
         print(f'''Ви виграли
@@ -37,6 +37,7 @@ def game():
         
     elif(Md.fails == 3):
         print(outputfails[Md.fails])
+        print(f'Слово було "{Md.wordStr}"')
         return
         
     print(f'''
@@ -56,24 +57,49 @@ def game():
         if(answer.lower() in Md.wordList):
             print(f"Літера {answer} є в цьому слові.")
             for idx1 in range(len(Md.wordList)):
-                if(answer.lower() == Md.wordBlurList[idx1]):
+                if(answer.lower() == Md.wordList[idx1]):
                     # Заміна * на літеру
                     Md.wordBlurList[idx1] = answer.lower()
+                    Md.wordBlurStr = ' '.join(Md.wordBlurList)
             game()
         else:
             print("Нажаль такої літери там немає")
             Md.fails += 1 
-            return
+            game()
         
     else: 
         print('Ви вже вводили цю літеру або вона не з Української мови.')
         game()
 
+def score():
+    old_points = 0
+    points = 0
+    if Md.fails == 0:
+        points += 100
+    elif Md.fails == 1:
+        points += 50
+    elif Md.fails == 2:
+        points += 25
+    else:
+        points -= 50
+    with open('C:\\Users\\Acer\\Desktop\\Python\\Hangman\\Scorepy.txt', 'r') as score_change:
+        for i in score_change.readlines():
+            all_points = i[22]+i[23]+i[24]+i[25]
+            try:
+                old_points += int(all_points)
+            except:
+                pass
+    score_change.close()
 
-
+    with open('Scorepy.txt', 'w') as score_change:
+        score_change.write(f'''
++----------------------------------------+
+              Score Point                
+           1. Word    {points + old_points}           
++----------------------------------------+''')
+        score_change.close()
 
 def main():
-    import Model as Md
     userChoice = printMenu()
     if userChoice == 1:
         difficulty = printDifficulty()
@@ -81,7 +107,9 @@ def main():
         Md.wordList = list(Md.wordStr)
         Md.wordBlurStr = len(Md.wordStr) * '*'
         Md.wordBlurList = list(Md.wordBlurStr)
-        score = game()
+        game()
+        score()
+        return
         
     elif userChoice == 2:
         printHighScore()

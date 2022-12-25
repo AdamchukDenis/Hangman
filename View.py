@@ -1,5 +1,5 @@
 # view
-
+import Model as Md
 def printMenu():
         choice = int(input(''' 
 +-----------------------------------+
@@ -44,7 +44,7 @@ secondFail = '''
 |    
 |     
 TTTTTTTTTT'''
-thirdFail = f'''
+thirdFail = '''
 |----T
 |    0    
 |  / | \  
@@ -52,4 +52,4 @@ thirdFail = f'''
 TTTTTTTTTT
 
 Ви програли
-Слово було "{Md.wordStr}"'''
+'''
