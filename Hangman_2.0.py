@@ -99,6 +99,9 @@ def score():
 +----------------------------------------+''')
         score_change.close()
 
+def restart():
+    print(View_restart)
+
 def main():
     userChoice = printMenu()
     if userChoice == 1:
@@ -109,7 +112,9 @@ def main():
         Md.wordBlurList = list(Md.wordBlurStr)
         game()
         score()
-        return
+        res_choice = restart()
+        if res_choice == 1: main()
+        else: return
         
     elif userChoice == 2:
         printHighScore()
@@ -117,4 +122,5 @@ def main():
         return
     
 
-main()
+if __self__ == '__self__':
+    main()
